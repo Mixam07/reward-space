@@ -1,0 +1,44 @@
+.banner{
+    margin-bottom: 30px;
+}
+
+.wrapper{
+    aspect-ratio: 470 / 218;
+}
+
+.list{
+    height: 100%;
+}
+
+.item img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.item{
+    height: 100%;
+}
+
+@media (min-width: 762px){
+    .banner{
+        margin-bottom: 40px;
+    }
+}
+
+@media (min-width: 992px){
+    .item img{
+        border-radius: 10px;
+    }
+
+    .banner{
+        margin-bottom: 50px;
+    }
+}
+
+@media (min-width: 1200px){
+    .banner{
+        margin-bottom: 60px;
+    }
+}

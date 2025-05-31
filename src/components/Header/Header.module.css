@@ -1,0 +1,45 @@
+.header{
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    background-color: #fff;
+    color: #fff;
+    padding: 10px 0;
+    box-shadow: 0 0 25px 25px rgba(0, 0, 0, .1);
+}
+
+.wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo{
+    font-family: "Aldrich";
+    text-transform: uppercase;
+    color: #000;
+}
+
+.navigation{
+    display: flex;
+    align-items: center;
+    column-gap: 15px;
+}
+
+.navigation img{
+    width: 25px;
+}
+
+@media (min-width: 762px){
+}
+
+@media (min-width: 992px){
+    .header{
+        padding: 15px 0;
+    }
+}
+
+@media (min-width: 1200px){
+}

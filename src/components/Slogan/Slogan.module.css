@@ -1,0 +1,23 @@
+.slogan{
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(190, 219, 242, 1);
+    z-index: 10;
+}
+
+.wrapper{
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    padding: 5px 0;
+}
+
+@media (min-width: 992px){
+    .wrapper{
+        padding: 10px 0;
+        font-size: 14px;
+    }
+}
