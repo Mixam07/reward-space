@@ -1,7 +1,7 @@
 import s from "./ProfileCustomer.module.css";
 
 import coin from "../../assets/icons/dollar.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const ProfileCustomer = (props: any) => {
@@ -11,7 +11,66 @@ const ProfileCustomer = (props: any) => {
     if(props.user && Object.keys(props.user).length == 0){
         props.setUser(null);
         navigate("/auth/register/customer");
+    } else if(props.user?.email) {
+        navigate("/profile/merchant");
     }
+
+    useEffect(() => {
+        props.getProducts();
+    }, []);
+
+    useEffect(() => {
+        if(props.user?.email) {
+            navigate("/profile/merchant");
+        }
+    }, [props.user]);
+
+    const buy = async (e: any) => {
+        const id = e.target.getAttribute("data-id");
+
+        await props.buyProduct(id);
+        props.getUser();
+    }
+
+    const products = props.companies?.map((elem: any, q: number) => {
+        return [...elem.certificates, ...elem.discounts].map((item: any, i: number) => {
+            return(
+                <div className={s.item}>
+                    <div className={s.photo}>
+                        <img src={elem.logoUrl} alt="photo" />
+                    </div>
+                    <p className={s.price}>{item.pointPrice} <img src={coin} alt="coin" /></p>
+                    {
+                        item.rate?
+                        <p className={s.title}>Знижка {item.rate * 100}%</p>:
+                        <p className={s.title}>Знижка на {item.amount}грн</p>
+                    }
+                    <button className={s.buy} data-id={item.id} onClick={buy} >Купити</button>
+                </div>
+            )
+        })
+    });
+
+    const myProducts = props.myProducts?.map((item: any, i: number) => {
+        const elem = item.certificate || item.discount;
+     
+        return(
+            <div key={i+1} className={s.element}>
+                <div className={s.image}>
+                    <img src={elem.merchant?.logoUrl} alt="photo" />
+                </div>
+                <div className={s.information}>
+                    <p className={s.cost}>{elem.pointPrice} <img src={coin} alt="coin" /></p>
+                    {
+                        item.rate?
+                        <p className={s.headline}>Знижка {elem.rate * 100}%</p>:
+                        <p className={s.headline}>Знижка на {elem.amount}грн</p>
+                    }
+                </div>
+            </div>
+        )
+    });
+
     
     return (
         <section className={s.profile}>
@@ -27,100 +86,8 @@ const ProfileCustomer = (props: any) => {
                 </div>
                 {
                     type == 0?
-                    <div className={s.shop}>
-                        <div className={s.item}>
-                            <div className={s.photo}>
-                                <img src="https://content1.rozetka.com.ua/goods/images/preview/550313784.jpg" alt="photo" />
-                            </div>
-                            <p className={s.price}>750 <img src={coin} alt="coin" /></p>
-                            <p className={s.title}>Кабель живлення 70mai UP02 для дзеркала реєстратора Dash..</p>
-                        </div>
-                        <div className={s.item}>
-                            <div className={s.photo}>
-                                <img src="https://content1.rozetka.com.ua/goods/images/preview/550313784.jpg" alt="photo" />
-                            </div>
-                            <p className={s.price}>750 <img src={coin} alt="coin" /></p>
-                            <p className={s.title}>Кабель живлення 70mai UP02 для дзеркала реєстратора Dash..</p>
-                        </div>
-                        <div className={s.item}>
-                            <div className={s.photo}>
-                                <img src="https://content1.rozetka.com.ua/goods/images/preview/550313784.jpg" alt="photo" />
-                            </div>
-                            <p className={s.price}>750 <img src={coin} alt="coin" /></p>
-                            <p className={s.title}>Кабель живлення 70mai UP02 для дзеркала реєстратора Dash..</p>
-                        </div>
-                        <div className={s.item}>
-                            <div className={s.photo}>
-                                <img src="https://content1.rozetka.com.ua/goods/images/preview/550313784.jpg" alt="photo" />
-                            </div>
-                            <p className={s.price}>750 <img src={coin} alt="coin" /></p>
-                            <p className={s.title}>Кабель живлення 70mai UP02 для дзеркала реєстратора Dash..</p>
-                        </div>
-                        <div className={s.item}>
-                            <div className={s.photo}>
-                                <img src="https://content1.rozetka.com.ua/goods/images/preview/550313784.jpg" alt="photo" />
-                            </div>
-                            <p className={s.price}>750 <img src={coin} alt="coin" /></p>
-                            <p className={s.title}>Кабель живлення 70mai UP02 для дзеркала реєстратора Dash..</p>
-                        </div>
-                        <div className={s.item}>
-                            <div className={s.photo}>
-                                <img src="https://content1.rozetka.com.ua/goods/images/preview/550313784.jpg" alt="photo" />
-                            </div>
-                            <p className={s.price}>750 <img src={coin} alt="coin" /></p>
-                            <p className={s.title}>Кабель живлення 70mai UP02 для дзеркала реєстратора Dash..</p>
-                        </div>
-                        <div className={s.item}>
-                            <div className={s.photo}>
-                                <img src="https://content1.rozetka.com.ua/goods/images/preview/550313784.jpg" alt="photo" />
-                            </div>
-                            <p className={s.price}>750 <img src={coin} alt="coin" /></p>
-                            <p className={s.title}>Кабель живлення 70mai UP02 для дзеркала реєстратора Dash..</p>
-                        </div>
-                        <div className={s.item}>
-                            <div className={s.photo}>
-                                <img src="https://content1.rozetka.com.ua/goods/images/preview/550313784.jpg" alt="photo" />
-                            </div>
-                            <p className={s.price}>750 <img src={coin} alt="coin" /></p>
-                            <p className={s.title}>Кабель живлення 70mai UP02 для дзеркала реєстратора Dash..</p>
-                        </div>
-                        <div className={s.item}>
-                            <div className={s.photo}>
-                                <img src="https://content1.rozetka.com.ua/goods/images/preview/550313784.jpg" alt="photo" />
-                            </div>
-                            <p className={s.price}>750 <img src={coin} alt="coin" /></p>
-                            <p className={s.title}>Кабель живлення 70mai UP02 для дзеркала реєстратора Dash..</p>
-                        </div>
-                    </div>:
-                    <div className={s.history}>
-                        <div className={s.element}>
-                            <div className={s.image}>
-                                <img src="https://content1.rozetka.com.ua/goods/images/preview/550313784.jpg" alt="photo" />
-                            </div>
-                            <div className={s.information}>
-                                <p className={s.cost}>750 <img src={coin} alt="coin" /></p>
-                                <p className={s.headline}>Кабель живлення 70mai UP02 для дзеркала реєстратора Dash..</p>
-                            </div>
-                        </div>
-                        <div className={s.element}>
-                            <div className={s.image}>
-                                <img src="https://content1.rozetka.com.ua/goods/images/preview/550313784.jpg" alt="photo" />
-                            </div>
-                            <div className={s.information}>
-                                <p className={s.cost}>750 <img src={coin} alt="coin" /></p>
-                                <p className={s.headline}>Кабель живлення 70mai UP02 для дзеркала реєстратора Dash..</p>
-                            </div>
-                        </div>
-                        <div className={s.element}>
-                            <div className={s.image}>
-                                <img src="https://content1.rozetka.com.ua/goods/images/preview/550313784.jpg" alt="photo" />
-                            </div>
-                            <div className={s.information}>
-                                <p className={s.cost}>750 <img src={coin} alt="coin" /></p>
-                                <p className={s.headline}>Кабель живлення 70mai UP02 для дзеркала реєстратора Dash..</p>
-                            </div>
-                        </div>
-                    </div>
+                    <div className={s.shop}>{products}</div>:
+                    <div className={s.history}>{myProducts}</div>
                 }
             </div>
         </section>

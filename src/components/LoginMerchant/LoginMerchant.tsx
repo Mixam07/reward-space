@@ -9,12 +9,6 @@ import { useEffect } from "react";
 const LoginMerchant = (props: any) => {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (localStorage.getItem("accessToken")) {
-        navigate("/");
-        }
-    }, []);
-
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -48,12 +42,12 @@ const LoginMerchant = (props: any) => {
                 password: values.password
             });
 
-            if (result === null) {
-                setErrors({ error: 'Реєстрація не вдалася. Спробуйте ще раз.' });
+            if (result === null || result.error) {
+                setErrors({ error: result.error? result.error: 'Авторизація не вдалася. Спробуйте ще раз.' });
             } else {
                 props.getUser();
 
-                navigate('/');
+                navigate('/profile/merchant');
             }
         },
     });

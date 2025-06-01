@@ -4,6 +4,7 @@ import RegisterCustomer from "./RegisterCustomer";
 import { getUserThunkCreator, registerCustomerThunkCreator } from "../../redux/reducers/user-reducer";
 
 const mapStateToProps = (state: RootState) => ({
+    user: state.user.user
 });
 
 const connector = connect(mapStateToProps, {

@@ -5,16 +5,12 @@ import { NavLink, useNavigate } from "react-router-dom";
 import name from "../../assets/icons/name.svg";
 import email from "../../assets/icons/email.svg";
 import password from "../../assets/icons/password.svg";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const RegisterCustomer = (props: any) => {
+    const [id, setId] = useState("");
+    const [bool, setBool] = useState(false);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        if (localStorage.getItem("accessToken")) {
-        navigate("/");
-        }
-    }, []);
 
     const formik = useFormik({
         initialValues: {
@@ -27,7 +23,7 @@ const RegisterCustomer = (props: any) => {
         validate: (values: any) => {
             const errors: Record<string, string> = {};
 
-            const nameRegex = /^[а-яіїєґ']+$/u;
+            const nameRegex = /^[А-Яа-яІіЇїЄєҐґ']+$/u;
 
             if (!values.firstName) {
                 errors.firstName = "Ім’я обов’язкове";
@@ -69,38 +65,89 @@ const RegisterCustomer = (props: any) => {
                 password: values.password
             });
 
-            if (result === null) {
-                setErrors({ error: 'Реєстрація не вдалася. Спробуйте ще раз.' });
+            if (result === null || result.error) {
+                setErrors({ error: result.error? result.error: 'Реєстрація не вдалася. Спробуйте ще раз.' });
             } else {
-                props.getUser();
+                await props.getUser();
 
-                navigate('/');
+                setId(props.user?.telegramCode);
+
+                setBool(true)
             }
         },
     });
+
+    const onclick = (e: any) => {
+        if(e.target.classList.contains(s.canvas)){
+            setBool(false);
+
+            navigate('/profile/customer');
+        }
+    }
+
     return (
-        <section className={s.register}>
-            <div className="container">
-                <form onSubmit={formik.handleSubmit} className={s.form}>
-                    <h1 className={s.title}>Створити новий обліковий запис</h1>
+        <>
+            <section className={s.register}>
+                <div className="container">
+                    <form onSubmit={formik.handleSubmit} className={s.form}>
+                        <h1 className={s.title}>Створити новий обліковий запис</h1>
 
-                    <div className={s.wrap}>
+                        <div className={s.wrap}>
+                            <div className={s.wrapper}>
+                                <input
+                                    className={s.input}
+                                    type="text"
+                                    name="firstName"
+                                    placeholder="Давід"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.firstName}
+                                />
+                                <label className={s.label} htmlFor="firstName">ІМ'Я</label>
+                                <div className={s.icon}>
+                                    <img src={name} alt="" />
+                                </div>
+                                {formik.touched.firstName && typeof formik.errors.firstName === 'string' && (
+                                    <div className={s.error}>{formik.errors.firstName}</div>
+                                )}
+                            </div>
+
+                            <div className={s.wrapper}>
+                                <input
+                                    className={s.input}
+                                    type="text"
+                                    name="lastName"
+                                    placeholder="Метьюз"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.lastName}
+                                />
+                                <label className={s.label} htmlFor="lastName">ПРІЗВИЩЕ</label>
+                                <div className={s.icon}>
+                                    <img src={name} alt="" />
+                                </div>
+                                {formik.touched.lastName  && typeof formik.errors.lastName === 'string' && (
+                                    <div className={s.error}>{formik.errors.lastName}</div>
+                                )}
+                            </div>
+                        </div>
+
                         <div className={s.wrapper}>
                             <input
                                 className={s.input}
-                                type="text"
-                                name="firstName"
-                                placeholder="Давід"
+                                type="tel"
+                                name="phoneNumber"
+                                placeholder="+380964856781"
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                value={formik.values.firstName}
+                                value={formik.values.phoneNumber}
                             />
-                            <label className={s.label} htmlFor="firstName">ІМ'Я</label>
+                            <label className={s.label} htmlFor="phoneNumber">Телефон</label>
                             <div className={s.icon}>
-                                <img src={name} alt="" />
+                                <img src={email} alt="" />
                             </div>
-                            {formik.touched.firstName && typeof formik.errors.firstName === 'string' && (
-                                <div className={s.error}>{formik.errors.firstName}</div>
+                            {formik.touched.phoneNumber && typeof formik.errors.phoneNumber === 'string' && (
+                                <div className={s.error}>{formik.errors.phoneNumber}</div>
                             )}
                         </div>
 
@@ -108,68 +155,36 @@ const RegisterCustomer = (props: any) => {
                             <input
                                 className={s.input}
                                 type="text"
-                                name="lastName"
-                                placeholder="Метьюз"
+                                name="password"
+                                placeholder="*****************"
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
-                                value={formik.values.lastName}
+                                value={formik.values.password}
                             />
-                            <label className={s.label} htmlFor="lastName">ПРІЗВИЩЕ</label>
+                            <label className={s.label} htmlFor="password">Пароль</label>
                             <div className={s.icon}>
-                                <img src={name} alt="" />
+                                <img src={password} alt="" />
                             </div>
-                            {formik.touched.lastName  && typeof formik.errors.lastName === 'string' && (
-                                <div className={s.error}>{formik.errors.lastName}</div>
+                            {formik.touched.password  && typeof formik.errors.password === 'string' && (
+                                <div className={s.error}>{formik.errors.password}</div>
                             )}
                         </div>
-                    </div>
 
-                    <div className={s.wrapper}>
-                        <input
-                            className={s.input}
-                            type="tel"
-                            name="phoneNumber"
-                            placeholder="+380964856781"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.phoneNumber}
-                        />
-                        <label className={s.label} htmlFor="phoneNumber">Телефон</label>
-                        <div className={s.icon}>
-                            <img src={email} alt="" />
-                        </div>
-                        {formik.touched.phoneNumber && typeof formik.errors.phoneNumber === 'string' && (
-                            <div className={s.error}>{formik.errors.phoneNumber}</div>
+                        <button type="submit" className={s.submit}>СТВОРИТИ АККАУНТ</button>
+                        {formik.errors.error && (
+                            <div className={s.error}>{formik.errors.error}</div>
                         )}
-                    </div>
-
-                    <div className={s.wrapper}>
-                        <input
-                            className={s.input}
-                            type="text"
-                            name="password"
-                            placeholder="*****************"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.password}
-                        />
-                        <label className={s.label} htmlFor="password">Пароль</label>
-                        <div className={s.icon}>
-                            <img src={password} alt="" />
-                        </div>
-                        {formik.touched.password  && typeof formik.errors.password === 'string' && (
-                            <div className={s.error}>{formik.errors.password}</div>
-                        )}
-                    </div>
-
-                    <button type="submit" className={s.submit}>СТВОРИТИ АККАУНТ</button>
-                    {formik.errors.error && (
-                        <div className={s.error}>{formik.errors.error}</div>
-                    )}
-                    <div className={s.text}>Вже маєш обліковий запис? <NavLink className={s.link} to="/auth/login/customer">Увійти</NavLink></div>
-                </form>
+                        <div className={s.text}>Вже маєш обліковий запис? <NavLink className={s.link} to="/auth/login/customer">Увійти</NavLink></div>
+                    </form>
+                </div>
+            </section>
+            <div onClick={ (e: any) => { onclick(e) } } className={`${s.canvas} ${bool && s.active}`}>
+                <div className={s.popup}>
+                    <p className={s.headline}>Підключись в телеграм</p>
+                    <a className={s.href} target="_blank" href={`https://t.me/Reward_Space_Bot?start=${id}`}>Перейти</a>
+                </div>
             </div>
-        </section>
+        </>
     )
 }
 

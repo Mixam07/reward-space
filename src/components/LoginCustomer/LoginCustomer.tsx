@@ -9,12 +9,6 @@ import { useEffect } from "react";
 const LoginCustomer = (props: any) => {
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (localStorage.getItem("accessToken")) {
-        navigate("/");
-        }
-    }, []);
-
     const formik = useFormik({
         initialValues: {
             phoneNumber: "",
@@ -46,12 +40,12 @@ const LoginCustomer = (props: any) => {
                 password: values.password
             });
 
-            if (result === null) {
-                setErrors({ error: 'Реєстрація не вдалася. Спробуйте ще раз.' });
+            if (result === null || result.error) {
+                setErrors({ error: result.error? result.error: 'Авторизація не вдалася. Спробуйте ще раз.' });
             } else {
                 props.getUser();
 
-                navigate('/');
+                navigate('/profile/customer');
             }
         },
     });

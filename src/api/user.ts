@@ -32,7 +32,13 @@ const registerCustomer = async (user: Customer) => {
 
         return response.data;
     } catch (error: any) {
-        return null;
+        if(error.response?.data?.message){
+            return {
+                "error": error.response?.data?.message
+            }
+        } else {
+            return null;
+        }
     }
 }
 
@@ -42,7 +48,13 @@ const loginCustomer = async (user: Customer) => {
 
         return response.data;
     } catch (error: any) {
-        return null;
+        if(error.response?.data?.message){
+            return {
+                "error": error.response?.data?.message
+            }
+        } else {
+            return null;
+        }
     }
 }
 
@@ -78,7 +90,13 @@ const registerMerchant = async (user: Merchant) => {
       
         return response.data;
     } catch (error: any) {
-        return null;
+        if(error.response?.data?.message){
+            return {
+                "error": error.response?.data?.message
+            }
+        } else {
+            return null;
+        }
     }
 }
 
@@ -88,8 +106,88 @@ const loginMerchant = async (user: Merchant) => {
 
         return response.data;
     } catch (error: any) {
-        return null;
+        if(error.response?.data?.message){
+            return {
+                "error": error.response?.data?.message
+            }
+        } else {
+            return null;
+        }
     }
 }
 
-export { registerCustomer, getCustomer, loginCustomer, registerMerchant, getMerchant, loginMerchant }
+const createKey = async (accessToken: string) => {
+    try {
+        const response = await axios.post(`${url}/v1/auth/merchant/api-key`, {}, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            }
+        });
+
+        return response.data;
+    } catch (error: any) {
+        return null;
+    }
+};
+
+const putKey = async (accessToken: string) => {
+    try {
+        const response = await axios.put(`${url}/v1/auth/merchant/api-key`, {}, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            }
+        });
+
+        return response.data;
+    } catch (error: any) {
+        if(error.response?.data?.message){
+            return {
+                "error": error.response?.data?.message
+            }
+        } else {
+            return null;
+        }
+    }
+};
+
+const createCertificate = async (accessToken: string, data: any) => {
+    try {
+        const response = await axios.post(`${url}/v1/certificates`, data, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            }
+        });
+
+        return response.data;
+    } catch (error: any) {
+        if(error.response?.data?.message){
+            return {
+                "error": error.response?.data?.message
+            }
+        } else {
+            return null;
+        }
+    }
+};
+
+const createDiscount = async (accessToken: string, data: any) => {
+    try {
+        const response = await axios.post(`${url}/v1/discounts`, data, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`,
+            }
+        });
+
+        return response.data;
+    } catch (error: any) {
+        if(error.response?.data?.message){
+            return {
+                "error": error.response?.data?.message
+            }
+        } else {
+            return null;
+        }
+    }
+};
+
+export { registerCustomer, getCustomer, loginCustomer, registerMerchant, getMerchant, loginMerchant, createKey, putKey, createCertificate, createDiscount }

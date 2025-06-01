@@ -18,7 +18,7 @@ const Header = (props: any) => {
                 */}
                 <div className="container">
                     <div className={s.wrapper}>
-                        <NavLink className={s.logo} to="/auth/login/customer">Reward Space</NavLink>
+                        <div className={s.logo}>Reward Space</div>
                         <nav className={s.navigation}>
                             {/*
                             <NavLink to="/">

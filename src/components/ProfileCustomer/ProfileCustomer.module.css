@@ -95,7 +95,7 @@
 }
 
 .image{
-    width: 50px;
+    width: 70px;
     height: 50px;
 }
 
@@ -115,6 +115,18 @@
 .history{
     max-width: 500px;
     margin: 0 auto;
+}
+
+.buy{
+    background-color: #4B2D9F;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.title{
+    margin-bottom: 5px;
 }
 
 @media (min-width: 762px){
@@ -146,11 +158,16 @@
         line-height: 14px;
     }
 
+    .title{
+        margin-top: -5px;
+        margin-bottom: 10px;
+    }
+
     .price,
     .cost{
         font-size: 16px;
         margin-bottom: 10px;
-        line-height: 18px;
+        line-height: 1px;
     }
 
     .photo{

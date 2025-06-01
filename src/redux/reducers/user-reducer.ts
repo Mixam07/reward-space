@@ -1,7 +1,8 @@
 import { Dispatch } from "redux";
-import { getCustomer, getMerchant, loginCustomer, loginMerchant, registerCustomer, registerMerchant } from "../../api/user";
+import { createCertificate, createDiscount, createKey, getCustomer, getMerchant, loginCustomer, loginMerchant, putKey, registerCustomer, registerMerchant } from "../../api/user";
 
 const SET_USER = "SET-USER/user";
+const SET_KEY = "SET-KEY/user";
 
 export interface Merchant {
     name: string,
@@ -20,11 +21,13 @@ export interface Customer {
 }
 
 export interface UserState {
-    user: Customer | Merchant | null | {}
+    user: Customer | Merchant | null | {},
+    apiKey: null | string
 }
 
 const initialState: UserState = {
-    user: null
+    user: null,
+    apiKey: null
 };
 
 const userReducer = (state = initialState, action: any): UserState => {
@@ -36,12 +39,18 @@ const userReducer = (state = initialState, action: any): UserState => {
                     ...action.user
                 }
             };
+        case SET_KEY:
+            return {
+                ...state,
+                apiKey: action.key
+            };
         default:
             return state;
     }
 };
 
 export const setUser = (user: Customer | Merchant | {}) => ({type: SET_USER, user});
+export const setKey = (key: string | null) => ({type: SET_KEY, key});
 
 export const getUserThunkCreator = () => async (dispatch: Dispatch) => {
     const accessToken = localStorage.getItem("accessToken");
@@ -71,7 +80,7 @@ export const registerCustomerThunkCreator = (user: Customer) => async (dispatch:
 
         return result
     } else {
-        return null
+        return result
     }
 };
 
@@ -84,7 +93,7 @@ export const loginCustomerThunkCreator = (user: Customer) => async (dispatch: Di
 
         return result
     } else {
-        return null
+        return result
     }
 };
 
@@ -97,7 +106,7 @@ export const registerMerchantThunkCreator = (user: Merchant) => async (dispatch:
 
         return result
     } else {
-        return null
+        return result
     }
 };
 
@@ -110,7 +119,55 @@ export const loginMerchantThunkCreator = (user: Merchant) => async (dispatch: Di
 
         return result
     } else {
-        return null
+        return result
+    }
+};
+
+export const getKeyThunkCreator = (hasApiKey: null | boolean) => async (dispatch: Dispatch) => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if(!accessToken) return
+   
+    if(!hasApiKey) {
+        const result = await createKey(accessToken);
+
+        if(result) {
+            dispatch(setKey(result.apiKey))
+        }
+    } else {
+        const result = await putKey(accessToken);
+
+        if(result) {
+            dispatch(setKey(result.apiKey))
+        }
+    }
+};
+
+export const createCertificateThunkCreator = (data: any) => async (dispatch: Dispatch) => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if(!accessToken) return
+   
+    const result = await createCertificate(accessToken, data);
+
+    if(result) {
+        return true
+    } else{
+        return result
+    }
+};
+
+export const createDiscountThunkCreator = (data: any) => async (dispatch: Dispatch) => {
+    const accessToken = localStorage.getItem("accessToken");
+
+    if(!accessToken) return
+
+    const result = await createDiscount(accessToken, data);
+
+    if(result) {
+        return true
+    } else{
+        return result
     }
 };
 
