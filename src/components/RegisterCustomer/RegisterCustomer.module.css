@@ -64,6 +64,13 @@
     font-size: 10px;
 }
 
+.text{
+    text-align: center;
+    font-size: 12px;
+    color: #31293F;
+    margin-top: 10px;
+}
+
 @media (min-width: 762px){
 }
 
@@ -89,6 +96,10 @@
 
     .error{
         font-size: 12px;
+    }
+
+    .text{
+        font-size: 14px;
     }
 }
 

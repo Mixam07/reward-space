@@ -1,12 +1,20 @@
 import s from "./LoginMerchant.module.css";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import email from "../../assets/icons/email.svg";
 import password from "../../assets/icons/password.svg";
+import { useEffect } from "react";
 
 const LoginMerchant = (props: any) => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (localStorage.getItem("accessToken")) {
+        navigate("/");
+        }
+    }, []);
+
     const formik = useFormik({
         initialValues: {
             email: "",
@@ -97,6 +105,7 @@ const LoginMerchant = (props: any) => {
                     {formik.errors.error && (
                         <div className={s.error}>{formik.errors.error}</div>
                     )}
+                    <div className={s.text}>Ще не маєш обліковий запис? <NavLink className={s.link} to="/auth/register/merchant">Зареєструватися</NavLink></div>
                 </form>
             </div>
         </section>

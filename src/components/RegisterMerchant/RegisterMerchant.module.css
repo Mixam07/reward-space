@@ -86,6 +86,13 @@
     border-radius: 10px;
 }
 
+.text{
+    text-align: center;
+    font-size: 12px;
+    color: #31293F;
+    margin-top: 10px;
+}
+
 @media (min-width: 762px){
 }
 
@@ -116,6 +123,10 @@
     .photo{
         width: 85px;
         height: 71px;
+    }
+
+    .text{
+        font-size: 14px;
     }
 }
 

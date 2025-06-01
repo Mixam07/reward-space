@@ -6,32 +6,32 @@
     width: 100%;
     background-color: #fff;
     color: #fff;
-    padding: 10px 0;
+    padding: 20px 0;
     box-shadow: 0 0 25px 25px rgba(0, 0, 0, .1);
 }
 
 .wrapper{
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .logo{
     font-family: "Aldrich";
     text-transform: uppercase;
     color: #000;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 700;
+}
+
+.profile img{
+    width: 35px;
 }
 
 .navigation{
     display: flex;
     align-items: center;
     column-gap: 15px;
-}
-
-.navigation img{
-    width: 25px;
 }
 
 .slogan{
@@ -55,13 +55,13 @@
 
 @media (min-width: 762px){
     .logo{
-        font-size: 20px;
+        font-size: 26px;
     }
 }
 
 @media (min-width: 992px){
     .header{
-        padding: 15px 0;
+        padding: 20px 0;
     }
 
     .text{
@@ -70,17 +70,21 @@
     }
 
     .logo{
-        font-size: 22px;
+        font-size: 28px;
     }
 
     .item{
         color: #000;
         font-size: 16px;
     }
+
+    .profile img{
+        width: 40px;
+    }
 }
 
 @media (min-width: 1200px){
     .logo{
-        font-size: 24px;
+        font-size: 30px;
     }
 }

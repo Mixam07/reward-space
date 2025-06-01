@@ -1,18 +1,27 @@
 import s from "./RegisterMerchant.module.css";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import name from "../../assets/icons/name.svg";
 import email from "../../assets/icons/email.svg";
 import password from "../../assets/icons/password.svg";
+import description from "../../assets/icons/description.svg";
+import cashback from "../../assets/icons/cashback.svg";
 import add_photo from "../../assets/icons/add-photo.svg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const RegisterMerchant = (props: any) => {
     const [image, setImage] = useState<File>();
     const [previews, setPreviews] = useState<string>();
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (localStorage.getItem("accessToken")) {
+        navigate("/");
+        }
+    }, []);
+
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -39,10 +48,6 @@ const RegisterMerchant = (props: any) => {
             } else if (values.description.length > 128) {
                 errors.description = "Максимум 128 символи";
             }
-            /* else if (!nameRegex.test(values.description)) {
-                errors.description = "Опис повинний містити лише українські літери";
-            }
-                */
 
             if (!values.percent) {
                 errors.percent = "Відсоток обов’язковий";
@@ -166,7 +171,7 @@ const RegisterMerchant = (props: any) => {
                         />
                         <label className={s.label} htmlFor="description">Опис</label>
                         <div className={s.icon}>
-                            <img src={name} alt="" />
+                            <img width="24px" src={description} alt="" />
                         </div>
                         {formik.touched.description && typeof formik.errors.description === 'string' && (
                             <div className={s.error}>{formik.errors.description}</div>
@@ -185,7 +190,7 @@ const RegisterMerchant = (props: any) => {
                         />
                         <label className={s.label} htmlFor="percent">Відсоток</label>
                         <div className={s.icon}>
-                            <img src={email} alt="" />
+                            <img width="24px" src={cashback} alt="" />
                         </div>
                         {formik.touched.percent && typeof formik.errors.percent === 'string' && (
                             <div className={s.error}>{formik.errors.percent}</div>
@@ -234,6 +239,7 @@ const RegisterMerchant = (props: any) => {
                     {formik.errors.error && (
                         <div className={s.error}>{formik.errors.error}</div>
                     )}
+                    <div className={s.text}>Вже маєш обліковий запис? <NavLink className={s.link} to="/auth/login/merchant">Увійти</NavLink></div>
                 </form>
             </div>
         </section>

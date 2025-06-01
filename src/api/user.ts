@@ -14,6 +14,8 @@ const getCustomer = async (accessToken: string) => {
         
         return response.data;
     } catch (error: any) {
+        localStorage.clear();
+        
         return null;
     }
 };
@@ -54,6 +56,8 @@ const getMerchant = async (accessToken: string) => {
         
         return response.data;
     } catch (error: any) {
+        localStorage.clear();
+
         return null;
     }
 };

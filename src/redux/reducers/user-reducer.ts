@@ -20,7 +20,7 @@ export interface Customer {
 }
 
 export interface UserState {
-    user: Customer | Merchant | null
+    user: Customer | Merchant | null | {}
 }
 
 const initialState: UserState = {
@@ -41,7 +41,7 @@ const userReducer = (state = initialState, action: any): UserState => {
     }
 };
 
-export const setUser = (user: Customer | Merchant) => ({type: SET_USER, user});
+export const setUser = (user: Customer | Merchant | {}) => ({type: SET_USER, user});
 
 export const getUserThunkCreator = () => async (dispatch: Dispatch) => {
     const accessToken = localStorage.getItem("accessToken");
@@ -51,10 +51,14 @@ export const getUserThunkCreator = () => async (dispatch: Dispatch) => {
         const result = await getCustomer(accessToken || "");
 
         if(result) dispatch(setUser(result));
+        else dispatch(setUser({}));
     } else if(type == "merchant") {
         const result = await getMerchant(accessToken || "");
 
         if(result) dispatch(setUser(result));
+        else dispatch(setUser({}));
+    } else{
+        dispatch(setUser({}));
     }
 };
 

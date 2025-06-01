@@ -18,7 +18,7 @@ const Header = (props: any) => {
                 */}
                 <div className="container">
                     <div className={s.wrapper}>
-                        <NavLink className={s.logo} to="/">Reward Space</NavLink>
+                        <NavLink className={s.logo} to="/auth/login/customer">Reward Space</NavLink>
                         <nav className={s.navigation}>
                             {/*
                             <NavLink to="/">
@@ -28,15 +28,15 @@ const Header = (props: any) => {
                                 <img src={search} alt="search" />
                             </NavLink>
                             */}
-                            {
+                            {/*
                                 props.user?
-                                <NavLink to="/">
+                                <NavLink className={s.profile} to={`${props.user?.phoneNumber? "/profile/customer": "/"}`}>
                                     <img src={profile} alt="profile" />
                                 </NavLink>:
                                 <NavLink className={s.item} to="/auth/login/customer">
                                     Увійти
                                 </NavLink>
-                            }
+                            */}
                         </nav>
                     </div>
                 </div>

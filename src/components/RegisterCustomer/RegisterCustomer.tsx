@@ -1,13 +1,21 @@
 import s from "./RegisterCustomer.module.css";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import name from "../../assets/icons/name.svg";
 import email from "../../assets/icons/email.svg";
 import password from "../../assets/icons/password.svg";
+import { useEffect } from "react";
 
 const RegisterCustomer = (props: any) => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (localStorage.getItem("accessToken")) {
+        navigate("/");
+        }
+    }, []);
+
     const formik = useFormik({
         initialValues: {
             firstName: "",
@@ -158,6 +166,7 @@ const RegisterCustomer = (props: any) => {
                     {formik.errors.error && (
                         <div className={s.error}>{formik.errors.error}</div>
                     )}
+                    <div className={s.text}>Вже маєш обліковий запис? <NavLink className={s.link} to="/auth/login/customer">Увійти</NavLink></div>
                 </form>
             </div>
         </section>
