@@ -20,6 +20,8 @@
     font-family: "Aldrich";
     text-transform: uppercase;
     color: #000;
+    font-size: 18px;
+    font-weight: 700;
 }
 
 .navigation{
@@ -32,14 +34,53 @@
     width: 25px;
 }
 
+.slogan{
+    width: 100%;
+}
+
+.text{
+    text-align: center;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-bottom: 10px;
+    color: #000;
+    text-align: center;
+}
+
+.item{
+    color: #000;
+    font-size: 14px;
+}
+
 @media (min-width: 762px){
+    .logo{
+        font-size: 20px;
+    }
 }
 
 @media (min-width: 992px){
     .header{
         padding: 15px 0;
     }
+
+    .text{
+        padding: 10px 0;
+        font-size: 14px;
+    }
+
+    .logo{
+        font-size: 22px;
+    }
+
+    .item{
+        color: #000;
+        font-size: 16px;
+    }
 }
 
 @media (min-width: 1200px){
+    .logo{
+        font-size: 24px;
+    }
 }

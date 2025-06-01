@@ -1,16 +1,16 @@
 import { connect, ConnectedProps } from "react-redux";
 import { RootState } from "../../redux/store";
-import App from "./App";
-import { getUserThunkCreator } from "../../redux/reducers/user-reducer";
+import LoginCustomer from "./LoginCustomer";
+import { getUserThunkCreator, loginCustomerThunkCreator } from "../../redux/reducers/user-reducer";
 
 const mapStateToProps = (state: RootState) => ({
-    products: state.products.products
 });
 
 const connector = connect(mapStateToProps, {
+    loginCustomer: loginCustomerThunkCreator,
     getUser: getUserThunkCreator
 });
 
 export type PropsFromRedux = ConnectedProps<typeof connector>;
 
-export default connector(App);
+export default connector(LoginCustomer);

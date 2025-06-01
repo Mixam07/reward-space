@@ -5,26 +5,43 @@ import profile from "../../assets/icons/profile.svg";
 import search from "../../assets/icons/search.svg";
 import heart from "../../assets/icons/heart.svg";
 
-const Header = () => {
+const Header = (props: any) => {
     return (
-        <header className={s.header}>
-            <div className="container">
-                <div className={s.wrapper}>
-                    <NavLink className={s.logo} to="/">Reward Space</NavLink>
-                    <nav className={s.navigation}>
-                        <NavLink to="/">
-                            <img src={heart} alt="heart" />
-                        </NavLink>
-                        <NavLink to="/">
-                            <img src={search} alt="search" />
-                        </NavLink>
-                        <NavLink to="/">
-                            <img src={profile} alt="profile" />
-                        </NavLink>
-                    </nav>
+        <>
+            <header className={s.header}>
+                {/*
+                <section className={s.slogan}>
+                    <div className="container">
+                        <div className={s.text}>Накопичуй. Збирай бонуси. Насолоджуйся.</div>
+                    </div>
+                </section>
+                */}
+                <div className="container">
+                    <div className={s.wrapper}>
+                        <NavLink className={s.logo} to="/">Reward Space</NavLink>
+                        <nav className={s.navigation}>
+                            {/*
+                            <NavLink to="/">
+                                <img src={heart} alt="heart" />
+                            </NavLink>
+                            <NavLink to="/">
+                                <img src={search} alt="search" />
+                            </NavLink>
+                            */}
+                            {
+                                props.user?
+                                <NavLink to="/">
+                                    <img src={profile} alt="profile" />
+                                </NavLink>:
+                                <NavLink className={s.item} to="/auth/login/customer">
+                                    Увійти
+                                </NavLink>
+                            }
+                        </nav>
+                    </div>
                 </div>
-            </div>
-        </header>
+            </header>
+        </>
     )
 }
 
