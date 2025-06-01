@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Customer, Merchant } from '../redux/reducers/user-reducer';
 
-const apiUrl = process.env.REACT_APP_API_URL;
 const url = "https://lg50zswp-3000.euw.devtunnels.ms";
 
 const getCustomer = async (accessToken: string) => {

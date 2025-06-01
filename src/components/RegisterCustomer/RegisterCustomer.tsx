@@ -71,6 +71,8 @@ const RegisterCustomer = (props: any) => {
                 await props.getUser();
 
                 setId(props.user?.telegramCode);
+                const t = result
+                debugger
 
                 setBool(true)
             }

@@ -104,7 +104,16 @@ export const registerMerchantThunkCreator = (user: Merchant) => async (dispatch:
         localStorage.setItem("accessToken", result.accessToken);
         localStorage.setItem("type", "merchant");
 
-        return result
+        const data = await getCustomer(result.accessToken);
+
+        if(result) {
+            dispatch(setUser(result));
+            return data
+        }
+        else {
+            dispatch(setUser({}))
+            return null
+        };
     } else {
         return result
     }
